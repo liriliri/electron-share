@@ -1,15 +1,16 @@
 import { getSettingsStore } from '../../../main/lib/store'
 import { i18n, hasLocale } from '../../../common/util'
 import { app } from 'electron'
-import { handleEvent } from 'share/main/lib/util'
-import log from 'share/common/log'
+import { handleEvent } from './util'
+import log from '../../common/log'
+import { IpcGetLanguage } from '../../common/types'
 
 const logger = log('language')
 
 const store = getSettingsStore()
 
 let language = 'en-US'
-export function get() {
+export const get: IpcGetLanguage = function () {
   return language
 }
 

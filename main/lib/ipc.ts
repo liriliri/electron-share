@@ -4,6 +4,7 @@ import contextMenu from './contextMenu'
 import { handleEvent } from './util'
 import { getMemStore } from './store'
 import log from '../../common/log'
+import { IpcGetStore, IpcSetStore } from '../../common/types'
 
 const memStore = getMemStore()
 
@@ -33,8 +34,10 @@ export function init() {
       window.sendTo(name, channel, ...args)
     }
   )
-  handleEvent('setMemStore', (name, val) => memStore.set(name, val))
-  handleEvent('getMemStore', (name) => memStore.get(name))
+  handleEvent('setMemStore', <IpcSetStore>((name, val) => {
+    memStore.set(name, val)
+  }))
+  handleEvent('getMemStore', <IpcGetStore>((name) => memStore.get(name)))
   memStore.on('change', (name, val) => {
     window.sendAll('changeMemStore', name, val)
   })

@@ -1,8 +1,9 @@
 import { nativeTheme } from 'electron'
 import { getSettingsStore } from '../../../main/lib/store'
-import { getTheme, handleEvent } from 'share/main/lib/util'
-import * as window from 'share/main/lib/window'
-import log from 'share/common/log'
+import { getTheme, handleEvent } from './util'
+import * as window from './window'
+import log from '../../common/log'
+import { IpcGetTheme } from '../../common/types'
 
 const logger = log('theme')
 
@@ -10,7 +11,7 @@ type Theme = 'system' | 'light' | 'dark'
 
 const store = getSettingsStore()
 
-export function get() {
+export const get: IpcGetTheme = () => {
   return getTheme()
 }
 

@@ -6,6 +6,7 @@ import {
   IpcGetStore,
   IpcGetTheme,
   IpcSetStore,
+  IpcShowContextMenu,
 } from '../common/types'
 
 export default {
@@ -14,14 +15,18 @@ export default {
   getMemStore: invoke<IpcGetStore>('getMemStore'),
   setMemStore: invoke<IpcSetStore>('setMemStore'),
   openExternal: invoke('openExternal'),
-  showContextMenu: (x: number, y: number, template: any) => {
+  showContextMenu: <IpcShowContextMenu>((
+    x: number,
+    y: number,
+    template: any
+  ) => {
     ipcRenderer.invoke(
       'showContextMenu',
       Math.round(x),
       Math.round(y),
       template
     )
-  },
+  }),
   showOpenDialog: (options: OpenDialogOptions = {}) => {
     return ipcRenderer.invoke('showOpenDialog', options)
   },

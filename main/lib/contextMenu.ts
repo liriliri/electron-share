@@ -1,8 +1,9 @@
 import { Menu } from 'electron'
 import each from 'licia/each'
 import * as window from './window'
+import { IpcShowContextMenu } from 'share/common/types'
 
-export default function contextMenu(x: number, y: number, template: any) {
+const contextMenu: IpcShowContextMenu = function (x, y, template) {
   transTpl(template)
   const menu = Menu.buildFromTemplate(template)
   menu.popup({
@@ -10,6 +11,8 @@ export default function contextMenu(x: number, y: number, template: any) {
     y,
   })
 }
+
+export default contextMenu
 
 function transTpl(template: any) {
   each(template, (item: any) => {

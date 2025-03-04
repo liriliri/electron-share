@@ -1,12 +1,16 @@
 import { invoke } from './util'
 import types from 'licia/types'
-import { ipcRenderer, OpenDialogOptions, SaveDialogOptions } from 'electron'
+import { ipcRenderer } from 'electron'
 import {
   IpcGetLanguage,
   IpcGetStore,
   IpcGetTheme,
+  IpcOpenExternal,
+  IpcSendToWindow,
   IpcSetStore,
   IpcShowContextMenu,
+  IpcShowOpenDialog,
+  IpcShowSaveDialog,
 } from '../common/types'
 
 export default {
@@ -14,29 +18,13 @@ export default {
   getTheme: invoke<IpcGetTheme>('getTheme'),
   getMemStore: invoke<IpcGetStore>('getMemStore'),
   setMemStore: invoke<IpcSetStore>('setMemStore'),
-  openExternal: invoke('openExternal'),
-  showContextMenu: <IpcShowContextMenu>((
-    x: number,
-    y: number,
-    template: any
-  ) => {
-    ipcRenderer.invoke(
-      'showContextMenu',
-      Math.round(x),
-      Math.round(y),
-      template
-    )
-  }),
-  showOpenDialog: (options: OpenDialogOptions = {}) => {
-    return ipcRenderer.invoke('showOpenDialog', options)
-  },
-  showSaveDialog: (options: SaveDialogOptions = {}) => {
-    return ipcRenderer.invoke('showSaveDialog', options)
-  },
-  toggleDevTools: () => ipcRenderer.invoke('toggleDevTools'),
-  sendToWindow: (name: string, channel: string, ...args: any[]) => {
-    ipcRenderer.invoke('sendToWindow', name, channel, ...args)
-  },
+  openExternal: invoke<IpcOpenExternal>('openExternal'),
+  showContextMenu: invoke<IpcShowContextMenu>('showContextMenu'),
+  showOpenDialog: invoke<IpcShowOpenDialog>('showOpenDialog'),
+  showSaveDialog: invoke<IpcShowSaveDialog>('showSaveDialog'),
+  toggleDevTools: invoke('toggleDevTools'),
+  sendToWindow: invoke<IpcSendToWindow>('sendToWindow'),
+  relaunch: invoke('relaunch'),
   on: (event: string, cb: types.AnyFn) => {
     const listener = (e, ...args) => cb(...args)
     ipcRenderer.on(event, listener)

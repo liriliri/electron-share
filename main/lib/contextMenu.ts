@@ -4,6 +4,9 @@ import * as window from './window'
 import { IpcShowContextMenu } from 'share/common/types'
 
 const contextMenu: IpcShowContextMenu = function (x, y, template) {
+  x = Math.round(x)
+  y = Math.round(y)
+
   transTpl(template)
   const menu = Menu.buildFromTemplate(template)
   menu.popup({

@@ -1,10 +1,17 @@
-import { dialog, OpenDialogOptions, SaveDialogOptions, shell } from 'electron'
+import { dialog, shell, app } from 'electron'
 import * as window from './window'
 import contextMenu from './contextMenu'
 import { handleEvent } from './util'
 import { getMemStore } from './store'
 import log from '../../common/log'
-import { IpcGetStore, IpcSetStore } from '../../common/types'
+import {
+  IpcGetStore,
+  IpcOpenExternal,
+  IpcSendToWindow,
+  IpcSetStore,
+  IpcShowOpenDialog,
+  IpcShowSaveDialog,
+} from '../../common/types'
 
 const memStore = getMemStore()
 
@@ -13,27 +20,24 @@ const logger = log('ipc')
 export function init() {
   logger.info('init')
 
-  handleEvent('showOpenDialog', (options: OpenDialogOptions = {}) =>
-    dialog.showOpenDialog(options)
-  )
-  handleEvent('showSaveDialog', (options: SaveDialogOptions = {}) =>
-    dialog.showSaveDialog(options)
-  )
-  handleEvent('openExternal', (url: string) => {
+  handleEvent('showOpenDialog', <IpcShowOpenDialog>(
+    ((options) => dialog.showOpenDialog(options))
+  ))
+  handleEvent('showSaveDialog', <IpcShowSaveDialog>(
+    ((options) => dialog.showSaveDialog(options))
+  ))
+  handleEvent('openExternal', <IpcOpenExternal>((url) => {
     shell.openExternal(url)
-  })
+  }))
   handleEvent('toggleDevTools', () => {
     const win = window.getFocusedWin()
     if (win) {
       win.webContents.toggleDevTools()
     }
   })
-  handleEvent(
-    'sendToWindow',
-    (name: string, channel: string, ...args: any[]) => {
-      window.sendTo(name, channel, ...args)
-    }
-  )
+  handleEvent('sendToWindow', <IpcSendToWindow>((name, channel, ...args) => {
+    window.sendTo(name, channel, ...args)
+  }))
   handleEvent('setMemStore', <IpcSetStore>((name, val) => {
     memStore.set(name, val)
   }))
@@ -42,4 +46,8 @@ export function init() {
     window.sendAll('changeMemStore', name, val)
   })
   handleEvent('showContextMenu', contextMenu)
+  handleEvent('relaunch', () => {
+    app.relaunch()
+    app.exit()
+  })
 }

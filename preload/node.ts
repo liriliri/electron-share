@@ -1,4 +1,5 @@
 import net from 'node:net'
+import fs from 'node:fs'
 
 export default {
   createServer: function (listener: (socket: net.Socket) => void): net.Server {
@@ -22,4 +23,7 @@ export default {
       },
     } as any
   },
+  writeFile: fs.promises.writeFile,
+  readFile: fs.promises.readFile,
+  existsSync: fs.existsSync,
 }

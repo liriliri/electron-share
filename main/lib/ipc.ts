@@ -7,8 +7,10 @@ import log from '../../common/log'
 import {
   IpcGetStore,
   IpcOpenExternal,
+  IpcOpenPath,
   IpcSendToWindow,
   IpcSetStore,
+  IpcShowItemInFolder,
   IpcShowOpenDialog,
   IpcShowSaveDialog,
 } from '../../common/types'
@@ -50,4 +52,10 @@ export function init() {
     app.relaunch()
     app.exit()
   })
+  handleEvent('openPath', <IpcOpenPath>((path: string) => {
+    shell.openPath(path)
+  }))
+  handleEvent('showItemInFolder', <IpcShowItemInFolder>((path: string) => {
+    shell.showItemInFolder(path)
+  }))
 }

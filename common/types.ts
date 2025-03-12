@@ -22,3 +22,5 @@ export type IpcSendToWindow = (
   ...args: any[]
 ) => void
 export type IpcOpenExternal = (url: string) => void
+export type IpcOpenPath = (path: string) => void
+export type IpcShowItemInFolder = IpcOpenPath

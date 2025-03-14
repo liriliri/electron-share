@@ -5,6 +5,11 @@ import {
   SaveDialogReturnValue,
 } from 'electron'
 
+export interface IModalProps {
+  visible: boolean
+  onClose: () => void
+}
+
 export type IpcGetLanguage = () => string
 export type IpcGetTheme = () => string
 export type IpcGetStore = (name: string) => any

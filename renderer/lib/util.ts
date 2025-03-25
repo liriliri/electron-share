@@ -1,5 +1,7 @@
 import contain from 'licia/contain'
 import h from 'licia/h'
+import isArrBuffer from 'licia/isArrBuffer'
+import convertBin from 'licia/convertBin'
 import { isObservable, toJS } from 'mobx'
 import LunaNotification, { INotifyOptions } from 'luna-notification'
 
@@ -26,4 +28,17 @@ export async function setMemStore(name: string, val: any) {
 
 export function isFileDrop(e: React.DragEvent) {
   return contain(e.dataTransfer.types, 'Files')
+}
+
+export function copyData(buf: any, mime: string) {
+  if (!isArrBuffer(buf)) {
+    buf = convertBin(buf, 'ArrayBuffer')
+  }
+  navigator.clipboard.write([
+    new ClipboardItem({
+      [mime]: new Blob([buf], {
+        type: mime,
+      }),
+    }),
+  ])
 }

@@ -8,6 +8,7 @@ import {
   IpcGetStore,
   IpcOpenExternal,
   IpcOpenPath,
+  IpcOpenWindow,
   IpcSendToWindow,
   IpcSetStore,
   IpcShowItemInFolder,
@@ -21,6 +22,20 @@ const logger = log('ipc')
 
 export function init() {
   logger.info('init')
+
+  const openWindow: IpcOpenWindow = (url, name, options) => {
+    options = options || {}
+
+    const win = window.create({
+      name: name || url,
+      preload: false,
+      customTitlebar: false,
+      menu: false,
+      ...options,
+    })
+
+    win.loadURL(url)
+  }
 
   handleEvent('showOpenDialog', <IpcShowOpenDialog>(
     ((options) => dialog.showOpenDialog(options))
@@ -58,4 +73,5 @@ export function init() {
   handleEvent('showItemInFolder', <IpcShowItemInFolder>((path: string) => {
     shell.showItemInFolder(path)
   }))
+  handleEvent('openWindow', openWindow)
 }

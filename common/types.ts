@@ -29,3 +29,13 @@ export type IpcSendToWindow = (
 export type IpcOpenExternal = (url: string) => void
 export type IpcOpenPath = (path: string) => void
 export type IpcShowItemInFolder = IpcOpenPath
+export type IpcOpenWindow = (
+  url: string,
+  name?: string,
+  options?: {
+    width?: number
+    height?: number
+    minWidth?: number
+    minHeight?: number
+  }
+) => void

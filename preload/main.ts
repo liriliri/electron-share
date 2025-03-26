@@ -7,6 +7,7 @@ import {
   IpcGetTheme,
   IpcOpenExternal,
   IpcOpenPath,
+  IpcOpenWindow,
   IpcSendToWindow,
   IpcSetStore,
   IpcShowContextMenu,
@@ -29,6 +30,7 @@ export default {
   toggleDevTools: invoke('toggleDevTools'),
   sendToWindow: invoke<IpcSendToWindow>('sendToWindow'),
   relaunch: invoke('relaunch'),
+  openWindow: invoke<IpcOpenWindow>('openWindow'),
   on: (event: string, cb: types.AnyFn) => {
     const listener = (e, ...args) => cb(...args)
     ipcRenderer.on(event, listener)

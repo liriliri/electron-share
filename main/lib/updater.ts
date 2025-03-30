@@ -1,7 +1,7 @@
 import { autoUpdater } from 'electron-updater'
 import * as window from './window'
 import pkg from '../../../../package.json'
-import detectOs from 'licia/detectOs'
+import { getPlatform } from 'share/common/util'
 
 export function checkUpdate() {
   autoUpdater.checkForUpdates()
@@ -9,9 +9,7 @@ export function checkUpdate() {
 
 export function init() {
   autoUpdater.setFeedURL('https://release.liriliri.io')
-  autoUpdater.channel = `${
-    pkg.productName
-  }-latest-${getPlatform()}-${getArch()}`
+  autoUpdater.channel = `${pkg.productName}-latest-${getArch()}`
 
   autoUpdater.on('update-not-available', () => {
     window.sendTo('main', 'updateNotAvailable')
@@ -22,18 +20,6 @@ export function init() {
   autoUpdater.on('error', () => {
     window.sendTo('main', 'updateError')
   })
-}
-
-function getPlatform() {
-  const os = detectOs()
-
-  if (os === 'os x') {
-    return 'mac'
-  } else if (os === 'windows') {
-    return 'win'
-  }
-
-  return os
 }
 
 export function getArch() {

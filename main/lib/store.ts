@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import memoize from 'licia/memoize'
 import Store from 'licia/Store'
+import FileStore from 'licia/FileStore'
 import { getUserDataPath } from './util'
 
 fs.exists(getUserDataPath('data'), function (exists) {
@@ -11,4 +12,13 @@ fs.exists(getUserDataPath('data'), function (exists) {
 
 export const getMemStore = memoize(function () {
   return new Store({})
+})
+
+export const getTerminalStore = memoize(function () {
+  return new FileStore(getUserDataPath('data/terminal.json'), {
+    bounds: {
+      width: 959,
+      height: 639,
+    },
+  })
 })

@@ -39,3 +39,4 @@ export type IpcOpenWindow = (
     minHeight?: number
   }
 ) => void
+export type IpcGetLogs = () => string[]

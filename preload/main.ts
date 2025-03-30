@@ -3,6 +3,7 @@ import types from 'licia/types'
 import { ipcRenderer } from 'electron'
 import {
   IpcGetLanguage,
+  IpcGetLogs,
   IpcGetStore,
   IpcGetTheme,
   IpcOpenExternal,
@@ -31,6 +32,8 @@ export default {
   sendToWindow: invoke<IpcSendToWindow>('sendToWindow'),
   relaunch: invoke('relaunch'),
   openWindow: invoke<IpcOpenWindow>('openWindow'),
+  getLogs: invoke<IpcGetLogs>('getLogs'),
+  clearLogs: invoke('clearLogs'),
   on: (event: string, cb: types.AnyFn) => {
     const listener = (e, ...args) => cb(...args)
     ipcRenderer.on(event, listener)

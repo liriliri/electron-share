@@ -9,7 +9,7 @@ export function checkUpdate() {
 
 export function init() {
   autoUpdater.setFeedURL('https://release.liriliri.io')
-  autoUpdater.channel = `${pkg.productName}-latest-${getArch()}`
+  autoUpdater.channel = `${pkg.productName}-latest`
 
   autoUpdater.on('update-not-available', () => {
     window.sendTo('main', 'updateNotAvailable')
@@ -20,15 +20,4 @@ export function init() {
   autoUpdater.on('error', () => {
     window.sendTo('main', 'updateError')
   })
-}
-
-export function getArch() {
-  const arch = process.arch
-  const platform = getPlatform()
-
-  if (arch === 'x64' && platform === 'linux') {
-    return 'x86_64'
-  }
-
-  return arch
 }

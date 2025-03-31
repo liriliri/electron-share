@@ -1,7 +1,6 @@
 import { autoUpdater } from 'electron-updater'
 import * as window from './window'
 import pkg from '../../../../package.json'
-import { getPlatform } from 'share/common/util'
 
 export function checkUpdate() {
   autoUpdater.checkForUpdates()

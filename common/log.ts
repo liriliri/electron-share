@@ -3,6 +3,7 @@ import toArr from 'licia/toArr'
 import clone from 'licia/clone'
 import each from 'licia/each'
 import dateFormat from 'licia/dateFormat'
+import { isDev } from './util'
 
 const consoleMethods: any = {}
 each(['trace', 'log', 'info', 'warn', 'error'], (name) => {
@@ -63,6 +64,10 @@ function toLetter(type: string) {
   }
 
   return letters[type] || '?'
+}
+
+if (!isDev()) {
+  log.setLevel('info')
 }
 
 export default log

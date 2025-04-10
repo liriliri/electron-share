@@ -2,6 +2,8 @@ import { autoUpdater } from 'electron-updater'
 import * as window from './window'
 import pkg from '../../../../package.json'
 
+autoUpdater.autoDownload = false
+
 export function checkUpdate() {
   autoUpdater.checkForUpdates()
 }

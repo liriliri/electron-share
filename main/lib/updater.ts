@@ -13,7 +13,7 @@ export function init() {
   autoUpdater.setFeedURL('https://release.liriliri.io')
   autoUpdater.channel = `${pkg.productName}-latest`
   if (isMac && process.arch !== 'arm64') {
-    autoUpdater.channel = `${pkg.productName}-x64-latest`
+    autoUpdater.channel = `${pkg.productName}-latest-x64`
   }
 
   autoUpdater.on('update-not-available', () => {

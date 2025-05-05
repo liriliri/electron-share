@@ -2,6 +2,7 @@ import { Titlebar, TitlebarColor } from 'custom-electron-titlebar'
 import { colorBgContainer, colorBgContainerDark } from '../../common/theme'
 import getUrlParam from 'licia/getUrlParam'
 import isMac from 'licia/isMac'
+import $ from 'licia/$'
 import mainObj from './main'
 import { webUtils } from 'electron'
 
@@ -13,8 +14,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     titleBar = new Titlebar({
       containerOverflow: 'hidden',
     })
+    const $body = $('body')
+    $body.addClass('custom-titlebar')
     if (getUrlParam('page') && !isMac) {
-      document.body.classList.add('hide-cet-menubar')
+      $body.addClass('hide-cet-menubar')
     }
   }
 

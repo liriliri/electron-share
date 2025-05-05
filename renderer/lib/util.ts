@@ -2,6 +2,8 @@ import contain from 'licia/contain'
 import h from 'licia/h'
 import isArrBuffer from 'licia/isArrBuffer'
 import convertBin from 'licia/convertBin'
+import $ from 'licia/$'
+import isUndef from 'licia/isUndef'
 import { isObservable, toJS } from 'mobx'
 import LunaNotification, { INotifyOptions } from 'luna-notification'
 
@@ -41,4 +43,18 @@ export function copyData(buf: any, mime: string) {
       }),
     }),
   ])
+}
+
+let isCustomTitlebar: boolean
+
+export async function getWindowHeight() {
+  if (isUndef(isCustomTitlebar)) {
+    isCustomTitlebar = await main.isCustomTitlebar()
+  }
+
+  if (isCustomTitlebar) {
+    return window.innerHeight - $('.cet-titlebar').offset().height
+  }
+
+  return window.innerHeight
 }

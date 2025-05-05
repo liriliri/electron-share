@@ -9,16 +9,15 @@ let titleBar: Titlebar
 
 window.addEventListener('DOMContentLoaded', async () => {
   const isCustomTitleBar = await mainObj.isCustomTitlebar()
-  if (!isCustomTitleBar) {
-    return
+  if (isCustomTitleBar) {
+    titleBar = new Titlebar({
+      containerOverflow: 'hidden',
+    })
+    if (getUrlParam('page') && !isMac) {
+      document.body.classList.add('hide-cet-menubar')
+    }
   }
 
-  titleBar = new Titlebar({
-    containerOverflow: 'hidden',
-  })
-  if (getUrlParam('page') && !isMac) {
-    document.body.classList.add('hide-cet-menubar')
-  }
   updateTheme()
   mainObj.on('updateTheme', updateTheme)
 })
@@ -30,11 +29,14 @@ async function updateTheme() {
   } else {
     document.body.classList.remove('-theme-with-dark-background')
   }
-  const backgroundColor = TitlebarColor.fromHex(
-    theme === 'dark' ? colorBgContainerDark : colorBgContainer
-  )
-  ;(titleBar as any).currentOptions.menuBarBackgroundColor = backgroundColor
-  titleBar.updateBackground(backgroundColor)
+  const isCustomTitlebar = await mainObj.isCustomTitlebar()
+  if (isCustomTitlebar) {
+    const backgroundColor = TitlebarColor.fromHex(
+      theme === 'dark' ? colorBgContainerDark : colorBgContainer
+    )
+    ;(titleBar as any).currentOptions.menuBarBackgroundColor = backgroundColor
+    titleBar.updateBackground(backgroundColor)
+  }
 }
 
 mainObj.on('refreshMenu', () => {

@@ -8,6 +8,11 @@ import { webUtils } from 'electron'
 let titleBar: Titlebar
 
 window.addEventListener('DOMContentLoaded', async () => {
+  const isCustomTitleBar = await mainObj.isCustomTitlebar()
+  if (!isCustomTitleBar) {
+    return
+  }
+
   titleBar = new Titlebar({
     containerOverflow: 'hidden',
   })

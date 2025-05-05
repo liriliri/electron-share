@@ -40,3 +40,4 @@ export type IpcOpenWindow = (
   }
 ) => void
 export type IpcGetLogs = () => string[]
+export type IpcIsCustomTitlebar = () => boolean

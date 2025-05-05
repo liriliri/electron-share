@@ -81,6 +81,7 @@ export function create(opts: IWinOptions) {
   }
 
   const win = new BrowserWindow(options)
+  ;(win as any).customTitlebar = winOptions.customTitlebar
   if (!winOptions.menu) {
     win.setMenu(null)
   }

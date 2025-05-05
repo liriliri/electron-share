@@ -6,6 +6,7 @@ import {
   IpcGetLogs,
   IpcGetStore,
   IpcGetTheme,
+  IpcIsCustomTitlebar,
   IpcOpenExternal,
   IpcOpenPath,
   IpcOpenWindow,
@@ -34,6 +35,7 @@ export default {
   openWindow: invoke<IpcOpenWindow>('openWindow'),
   getLogs: invoke<IpcGetLogs>('getLogs'),
   clearLogs: invoke('clearLogs'),
+  isCustomTitlebar: invoke<IpcIsCustomTitlebar>('isCustomTitlebar'),
   on: (event: string, cb: types.AnyFn) => {
     const listener = (e, ...args) => cb(...args)
     ipcRenderer.on(event, listener)

@@ -1,4 +1,4 @@
-import { dialog, shell, app } from 'electron'
+import { dialog, shell, app, ipcMain, BrowserWindow } from 'electron'
 import * as window from './window'
 import contextMenu from './contextMenu'
 import { handleEvent } from './util'
@@ -74,4 +74,13 @@ export function init() {
     shell.showItemInFolder(path)
   }))
   handleEvent('openWindow', openWindow)
+  ipcMain.handle('isCustomTitlebar', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+
+    if (win) {
+      return (win as any).customTitlebar
+    }
+
+    return true
+  })
 }

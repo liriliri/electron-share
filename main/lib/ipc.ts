@@ -1,10 +1,11 @@
 import { dialog, shell, app, ipcMain, BrowserWindow } from 'electron'
 import * as window from './window'
 import contextMenu from './contextMenu'
-import { handleEvent } from './util'
+import { getOpenFileFromArgv, handleEvent } from './util'
 import { getMemStore } from './store'
 import log from '../../common/log'
 import {
+  IpcGetOpenFile,
   IpcGetStore,
   IpcOpenExternal,
   IpcOpenPath,
@@ -15,27 +16,44 @@ import {
   IpcShowOpenDialog,
   IpcShowSaveDialog,
 } from '../../common/types'
+import isMac from 'licia/isMac'
+import endWith from 'licia/endWith'
 
 const memStore = getMemStore()
 
 const logger = log('ipc')
 
+const openWindow: IpcOpenWindow = (url, name, options) => {
+  options = options || {}
+
+  const win = window.create({
+    name: name || url,
+    preload: false,
+    customTitlebar: false,
+    menu: false,
+    ...options,
+  })
+
+  win.loadURL(url)
+}
+
+let openFile = ''
+if (isMac) {
+  app.on('open-file', (_, path) => {
+    openFile = path
+  })
+}
+
+const getOpenFile: IpcGetOpenFile = (ext) => {
+  if (isMac && endWith(openFile, ext)) {
+    return openFile
+  }
+
+  return getOpenFileFromArgv(process.argv, ext)
+}
+
 export function init() {
   logger.info('init')
-
-  const openWindow: IpcOpenWindow = (url, name, options) => {
-    options = options || {}
-
-    const win = window.create({
-      name: name || url,
-      preload: false,
-      customTitlebar: false,
-      menu: false,
-      ...options,
-    })
-
-    win.loadURL(url)
-  }
 
   handleEvent('showOpenDialog', <IpcShowOpenDialog>(
     ((options) => dialog.showOpenDialog(options))
@@ -83,4 +101,5 @@ export function init() {
 
     return true
   })
+  handleEvent('getOpenFile', getOpenFile)
 }

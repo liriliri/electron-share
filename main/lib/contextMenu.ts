@@ -1,7 +1,7 @@
 import { Menu } from 'electron'
 import each from 'licia/each'
 import * as window from './window'
-import { IpcShowContextMenu } from 'share/common/types'
+import { IpcShowContextMenu } from '../../common/types'
 
 const contextMenu: IpcShowContextMenu = function (x, y, template) {
   x = Math.round(x)

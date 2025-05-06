@@ -6,6 +6,7 @@ import { isDev } from '../../common/util'
 import { fileURLToPath } from 'url'
 import log from '../../common/log'
 import pkg from '../../../../package.json'
+import endWith from 'licia/endWith'
 
 // @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -46,4 +47,15 @@ export function handleEvent(channel: string, listener: types.AnyFn) {
     logger.debug(channel, ...args)
     return listener(...args)
   })
+}
+
+export function getOpenFileFromArgv(argv: string[], ext: string) {
+  for (let i = 0, len = argv.length; i < len; i++) {
+    const arg = argv[i]
+    if (endWith(arg, ext)) {
+      return arg
+    }
+  }
+
+  return ''
 }

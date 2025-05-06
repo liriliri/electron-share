@@ -4,6 +4,7 @@ import { ipcRenderer } from 'electron'
 import {
   IpcGetLanguage,
   IpcGetLogs,
+  IpcGetOpenFile,
   IpcGetStore,
   IpcGetTheme,
   IpcIsCustomTitlebar,
@@ -36,6 +37,7 @@ export default {
   getLogs: invoke<IpcGetLogs>('getLogs'),
   clearLogs: invoke('clearLogs'),
   isCustomTitlebar: invoke<IpcIsCustomTitlebar>('isCustomTitlebar'),
+  getOpenFile: invoke<IpcGetOpenFile>('getOpenFile'),
   on: (event: string, cb: types.AnyFn) => {
     const listener = (e, ...args) => cb(...args)
     ipcRenderer.on(event, listener)

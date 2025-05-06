@@ -41,3 +41,4 @@ export type IpcOpenWindow = (
 ) => void
 export type IpcGetLogs = () => string[]
 export type IpcIsCustomTitlebar = () => boolean
+export type IpcGetOpenFile = (ext: string) => string | void

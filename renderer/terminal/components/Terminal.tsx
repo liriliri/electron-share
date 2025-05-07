@@ -38,8 +38,7 @@ export default observer(function () {
     term.unicode.activeVersion = '11'
     try {
       term.loadAddon(new WebglAddon())
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
+    } catch {
       term.loadAddon(new CanvasAddon())
     }
     term.open(terminalRef.current!)

@@ -109,7 +109,10 @@ export function create(opts: IWinOptions) {
   setTimeout(() => readyAndShow(), 1000)
 
   win.on('show', () => visibleWins.push(win))
-  win.on('focus', () => (focusedWin = win))
+  win.on('focus', () => {
+    focusedWin = win
+    win.webContents.send('focusWin')
+  })
   win.on('hide', () => remove(visibleWins, (window) => window === win))
   win.on('closed', () => {
     delete wins[opts.name]

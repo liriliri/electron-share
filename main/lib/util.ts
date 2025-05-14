@@ -5,7 +5,6 @@ import { app, ipcMain, nativeTheme } from 'electron'
 import { isDev } from '../../common/util'
 import { fileURLToPath } from 'url'
 import log from '../../common/log'
-import pkg from '../../../../package.json'
 import endWith from 'licia/endWith'
 
 // @ts-ignore
@@ -30,7 +29,7 @@ export function resolveUnpack(p) {
 }
 
 export function getUserDataPath(p: string) {
-  return path.resolve(app.getPath('appData'), pkg.name, p)
+  return path.resolve(app.getPath('userData'), p)
 }
 
 export function getTheme() {

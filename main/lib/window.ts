@@ -1,4 +1,8 @@
-import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron'
+import {
+  BrowserWindow,
+  BrowserWindowConstructorOptions,
+  screen,
+} from 'electron'
 import noop from 'licia/noop'
 import types from 'licia/types'
 import defaults from 'licia/defaults'
@@ -56,18 +60,37 @@ export function create(opts: IWinOptions) {
   const options: BrowserWindowConstructorOptions = {
     minWidth: winOptions.minWidth,
     minHeight: winOptions.minHeight,
-    width: winOptions.width,
-    height: winOptions.height,
     show: false,
     resizable: winOptions.resizable,
   }
+  if (winOptions.x && winOptions.y) {
+    const x = winOptions.x
+    const y = winOptions.y
+    const width = winOptions.width
+    const height = winOptions.height
+    const area = screen.getDisplayMatching({
+      x,
+      y,
+      width,
+      height,
+    }).workArea
+    if (
+      x >= area.x &&
+      x + width <= area.x + area.width &&
+      y >= area.y &&
+      y + height <= area.y + area.height
+    ) {
+      options.x = winOptions.x
+      options.y = winOptions.y
+    }
+    if (width <= area.width && height <= area.height) {
+      options.width = winOptions.width
+      options.height = winOptions.height
+    }
+  }
+
   options.backgroundColor = getTheme() ? colorBgContainerDark : colorBgContainer
-  if (winOptions.x) {
-    options.x = winOptions.x
-  }
-  if (winOptions.y) {
-    options.y = winOptions.y
-  }
+
   if (winOptions.preload) {
     options.webPreferences = {
       preload: path.join(__dirname, '../preload/index.js'),

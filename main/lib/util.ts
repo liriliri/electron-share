@@ -6,6 +6,7 @@ import { isDev } from '../../common/util'
 import { fileURLToPath } from 'url'
 import log from '../../common/log'
 import endWith from 'licia/endWith'
+import pkg from '../../../../package.json'
 
 // @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -29,6 +30,10 @@ export function resolveUnpack(p) {
 }
 
 export function getUserDataPath(p: string) {
+  if (isDev()) {
+    return path.resolve(app.getPath('appData'), pkg.name, p)
+  }
+
   return path.resolve(app.getPath('userData'), p)
 }
 

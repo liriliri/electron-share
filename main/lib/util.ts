@@ -31,7 +31,7 @@ export function resolveUnpack(p) {
 
 export function getUserDataPath(p: string) {
   if (isDev()) {
-    return path.resolve(app.getPath('appData'), pkg.name, p)
+    return path.resolve(app.getPath('appData'), pkg.productName, p)
   }
 
   return path.resolve(app.getPath('userData'), p)

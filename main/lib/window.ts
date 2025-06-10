@@ -87,6 +87,9 @@ export function create(opts: IWinOptions) {
       options.width = winOptions.width
       options.height = winOptions.height
     }
+  } else {
+    options.width = winOptions.width
+    options.height = winOptions.height
   }
 
   options.backgroundColor = getTheme() ? colorBgContainerDark : colorBgContainer

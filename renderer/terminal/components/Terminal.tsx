@@ -23,7 +23,7 @@ import copy from 'licia/copy'
 
 export default observer(function () {
   const terminalRef = useRef<HTMLDivElement>(null)
-  const termRef = useRef<Terminal>()
+  const termRef = useRef<Terminal>(null)
 
   useEffect(() => {
     const term = new Terminal({

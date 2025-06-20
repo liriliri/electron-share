@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { RefObject, useEffect } from 'react'
 import ResizeSensor from 'licia/ResizeSensor'
 
 export function useWindowResize(resizeCallback: () => void) {
@@ -11,7 +11,10 @@ export function useWindowResize(resizeCallback: () => void) {
   }, [])
 }
 
-export function useResizeSensor(containerRef: React.RefObject<HTMLElement>, resizeCallback: () => void) {
+export function useResizeSensor(
+  containerRef: RefObject<HTMLElement | null>,
+  resizeCallback: () => void
+) {
   useEffect(() => {
     if (!containerRef.current) {
       return

@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react'
 
 interface IProps {
   icon: string
+  className?: string
   title?: string
   disabled?: boolean
   state?: '' | 'hover' | 'active'
@@ -12,6 +13,7 @@ interface IProps {
 export default function (props: PropsWithChildren<IProps>) {
   return (
     <LunaToolbarButton
+      className={props.className || ''}
       disabled={props.disabled}
       state={props.state || ''}
       onClick={props.onClick}

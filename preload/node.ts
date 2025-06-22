@@ -8,7 +8,7 @@ export default {
         on(event: string, listener: (...args: any[]) => void) {
           socket.on(event, listener)
         },
-        write(buffer: Uint8Array | string, cb?: (err?: Error) => void) {
+        write(buffer: Uint8Array | string, cb?: (err?: Error | null) => void) {
           return socket.write(buffer, cb)
         },
       } as any)
@@ -26,4 +26,8 @@ export default {
   writeFile: fs.promises.writeFile,
   readFile: fs.promises.readFile,
   existsSync: fs.existsSync,
+  isDirectory: async function (file: string): Promise<boolean> {
+    const stats = await fs.promises.stat(file)
+    return stats.isDirectory()
+  },
 }

@@ -30,17 +30,17 @@
         color-bg-text-hover,
         color-success-hover,
         color-success-active,
+        color-primary-bg,
+        color-border,
         if(
           $class == ':root',
           (
-            color-primary-bg: color.adjust($color-primary, $lightness: 40%),
-            color-border: color.adjust($color-border, $lightness: 2%),
+            color-primary-bg: color.adjust($color-primary, $lightness: 25%),
             color-bg-container-darker:
               color.adjust($color-bg-container, $lightness: -5%),
           ),
           (
             color-primary-bg: color.adjust($color-primary, $lightness: -25%),
-            color-border: color.adjust($color-border-dark, $lightness: -8%),
             color-bg-container-darker:
               color.adjust($color-bg-container-dark, $lightness: -5%),
           )

@@ -1,5 +1,6 @@
 import net from 'node:net'
 import fs from 'node:fs'
+import os from 'node:os'
 
 export default {
   createServer: function (listener: (socket: net.Socket) => void): net.Server {
@@ -29,5 +30,8 @@ export default {
   isDirectory: async function (file: string): Promise<boolean> {
     const stats = await fs.promises.stat(file)
     return stats.isDirectory()
+  },
+  tmpdir: () => {
+    return os.tmpdir()
   },
 }

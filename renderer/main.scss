@@ -116,7 +116,7 @@ body {
   border: none;
   text-align: center;
   padding: 6px;
-  border-radius: var(--border-radius-s-m);
+  border-radius: #{$border-radius-s-m}px;
   background: var(--color-fill-tertiary);
   &:hover {
     background: var(--color-fill-secondary);

@@ -80,7 +80,13 @@ export function init() {
   memStore.on('change', (name, val) => {
     window.sendAll('changeMemStore', name, val)
   })
-  handleEvent('showContextMenu', contextMenu)
+  ipcMain.handle('showContextMenu', (event, x, y, template) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    if (win) {
+      win.focus()
+      contextMenu(x, y, template)
+    }
+  })
   handleEvent('relaunch', () => {
     app.relaunch()
     app.exit()

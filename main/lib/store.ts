@@ -22,3 +22,9 @@ export const getTerminalStore = memoize(function () {
     },
   })
 })
+
+export const getAboutStore = memoize(function () {
+  return new FileStore(getUserDataPath('data/about.json'), {
+    bounds: {},
+  })
+})

@@ -27,10 +27,16 @@ export default {
   writeFile: fs.promises.writeFile,
   readFile: fs.promises.readFile,
   existsSync: fs.existsSync,
-  isDirectory: async function (file: string): Promise<boolean> {
+  isDir: async function (file: string): Promise<boolean> {
     const stats = await fs.promises.stat(file)
     return stats.isDirectory()
   },
+  isEmptyDir: async function (dir: string): Promise<boolean> {
+    const files = await fs.promises.readdir(dir)
+    return files.length === 0
+  },
+  mkdir: fs.promises.mkdir,
+  rmdir: fs.promises.rmdir,
   tmpdir: () => {
     return os.tmpdir()
   },

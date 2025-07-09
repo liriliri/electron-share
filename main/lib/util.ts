@@ -29,6 +29,16 @@ export function resolveUnpack(p) {
   return path
 }
 
+export function resolveResources(p) {
+  const ret = resolve(`resources/${p}`)
+
+  if (!isDev() && contain(ret, 'app.asar')) {
+    return path.resolve(process.resourcesPath, p)
+  }
+
+  return ret
+}
+
 export function getUserDataPath(p: string) {
   if (isDev()) {
     return path.resolve(app.getPath('appData'), pkg.productName, p)

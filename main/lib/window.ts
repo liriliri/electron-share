@@ -63,6 +63,10 @@ export function create(opts: IWinOptions) {
     show: false,
     resizable: winOptions.resizable,
   }
+  if (!options.resizable) {
+    options.maximizable = false
+    options.minimizable = false
+  }
   if (winOptions.x && winOptions.y) {
     const x = winOptions.x
     const y = winOptions.y

@@ -15,8 +15,18 @@
 }
 
 .custom-titlebar {
-  .luna-modal {
+  .luna-modal,
+  .luna-command-palette,
+  .luna-gallery {
     top: 31px;
+  }
+}
+
+.platform-mac.custom-titlebar {
+  .luna-modal,
+  .luna-command-palette,
+  .luna-gallery {
+    top: 28px;
   }
 }
 
@@ -80,12 +90,6 @@ $theme-variables: meta.module-variables(theme);
   height: 16px;
   font-size: #{theme.$font-size}px;
   line-height: 16px;
-}
-
-.custom-titlebar {
-  .luna-command-palette {
-    top: 31px;
-  }
 }
 
 .luna-command-palette {

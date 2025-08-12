@@ -76,6 +76,9 @@ export function create(opts: IWinOptions) {
     if (data.bounds) {
       extend(opts, data.bounds)
     }
+    if (data.maximized) {
+      opts.maximized = data.maximized
+    }
   }
 
   const winOptions = opts as Required<IWinOptions>

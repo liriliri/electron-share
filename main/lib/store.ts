@@ -14,17 +14,6 @@ export const getMemStore = memoize(function () {
   return new Store({})
 })
 
-export const getTerminalStore = memoize(function () {
-  return new FileStore(getUserDataPath('data/terminal.json'), {
-    bounds: {
-      width: 960,
-      height: 640,
-    },
-  })
-})
-
-export const getAboutStore = memoize(function () {
-  return new FileStore(getUserDataPath('data/about.json'), {
-    bounds: {},
-  })
+export const getWindowStore = memoize(function () {
+  return new FileStore(getUserDataPath('data/window.json'), {})
 })

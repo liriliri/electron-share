@@ -1,8 +1,5 @@
 import { BrowserWindow } from 'electron'
-import { getAboutStore } from '../lib/store'
 import * as window from '../lib/window'
-
-const store = getAboutStore()
 
 let win: BrowserWindow | null = null
 
@@ -15,13 +12,10 @@ export function showWin() {
   win = window.create({
     name: 'about',
     resizable: false,
-    ...store.get('bounds'),
     minWidth: 360,
     minHeight: 240,
     width: 360,
     height: 240,
-    onSavePos: () => window.savePos(win, store),
-    menu: false,
   })
 
   win.on('close', () => {

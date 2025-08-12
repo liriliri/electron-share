@@ -19,8 +19,13 @@ import isEmpty from 'licia/isEmpty'
 import query from 'licia/query'
 import log from '../../common/log'
 import once from 'licia/once'
+import { getWindowStore } from './store'
+import isUndef from 'licia/isUndef'
+import extend from 'licia/extend'
 
 const logger = log('window')
+
+const store = getWindowStore()
 
 interface IWinOptions {
   name: string
@@ -51,10 +56,28 @@ export function create(opts: IWinOptions) {
     minHeight: 850,
     width: 1280,
     height: 850,
-    onSavePos: noop,
     menu: false,
     resizable: true,
   })
+
+  if (isUndef(opts.onSavePos)) {
+    opts.onSavePos = function () {
+      const isMaximized = win.isMaximized()
+      const data = store.get(opts.name) || {}
+      if (!isWindows || !isMaximized) {
+        data.bounds = win.getBounds()
+      }
+      if (isWindows) {
+        data.maximized = isMaximized
+      }
+      store.set(opts.name, data)
+    }
+    const data = store.get(opts.name) || {}
+    if (data.bounds) {
+      extend(opts, data.bounds)
+    }
+  }
+
   const winOptions = opts as Required<IWinOptions>
 
   const options: BrowserWindowConstructorOptions = {

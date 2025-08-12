@@ -1,11 +1,8 @@
 import { BrowserWindow, ipcMain } from 'electron'
-import { getTerminalStore } from '../lib/store'
 import * as window from '../../main/lib/window'
 import isBuffer from 'licia/isBuffer'
 import once from 'licia/once'
 import { IpcGetLogs } from '../../common/types'
-
-const store = getTerminalStore()
 
 let win: BrowserWindow | null = null
 
@@ -19,10 +16,11 @@ export function showWin() {
 
   win = window.create({
     name: 'terminal',
+    width: 960,
+    height: 640,
     minWidth: 960,
     minHeight: 640,
-    ...store.get('bounds'),
-    onSavePos: () => window.savePos(win, store),
+    menu: false,
   })
 
   win.on('close', () => {

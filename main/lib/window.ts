@@ -3,7 +3,6 @@ import {
   BrowserWindowConstructorOptions,
   screen,
 } from 'electron'
-import noop from 'licia/noop'
 import types from 'licia/types'
 import defaults from 'licia/defaults'
 import remove from 'licia/remove'

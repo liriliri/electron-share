@@ -1,3 +1,5 @@
+@use '../../../renderer/theme' as *;
+
 @mixin input() {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   color: var(--color-text);
@@ -161,5 +163,91 @@
     @include input();
     resize: none;
     width: 100%;
+  }
+}
+
+$switch-width: 52px;
+$switch-height: 28px;
+$switch-padding: 3px;
+$thumb-size: calc($switch-height - $switch-padding * 2);
+$switch-bg-off: var(--color-bg-container-darker);
+$switch-bg-on: var(--color-primary);
+$thumb-color: $color-white;
+$transition-duration: 0.3s;
+$transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+.item-checkbox {
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: $switch-width;
+    height: $switch-height;
+    margin-right: 12px;
+  }
+
+  .toggle-switch input[type='checkbox'] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $switch-bg-off;
+    border-radius: 6px;
+    transition: background-color $transition-duration $transition-easing;
+
+    &:before {
+      content: '';
+      position: absolute;
+      height: $thumb-size;
+      width: $thumb-size;
+      left: $switch-padding;
+      bottom: $switch-padding;
+      background-color: $thumb-color;
+      border-radius: 3px;
+      transition: transform $transition-duration $transition-easing;
+      box-shadow: var(--box-shadow);
+    }
+  }
+
+  input:checked + .slider {
+    background-color: $switch-bg-on;
+  }
+
+  input:checked + .slider::before {
+    transform: translateX(
+      calc($switch-width - $thumb-size - $switch-padding * 2)
+    );
+  }
+
+  .toggle-label {
+    font-size: 14px;
+    flex: 1;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .toggle-switch:hover .slider {
+    filter: brightness(0.95);
+  }
+
+  input:checked:hover + .slider {
+    filter: brightness(1.05);
+  }
+
+  .slider:active::before {
+    transform: scale(0.95) translateX(0);
+  }
+
+  input:checked + .slider:active::before {
+    transform: scale(0.95)
+      translateX(calc($switch-width - $thumb-size - $switch-padding * 2));
   }
 }

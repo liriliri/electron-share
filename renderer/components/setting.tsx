@@ -5,6 +5,8 @@ import types from 'licia/types'
 import map from 'licia/map'
 import toNum from 'licia/toNum'
 import toStr from 'licia/toStr'
+import uuid from 'licia/uuid'
+import { t } from '../../../common/util'
 
 interface IRowProps {
   className?: string
@@ -173,6 +175,43 @@ export function Textarea(props: ITextareaProps) {
           placeholder={props.placeholder || ''}
           onChange={onChange}
         />
+      </div>
+    </div>
+  )
+}
+
+interface ICheckboxProps {
+  title: string
+  description?: string
+  value: boolean
+  onChange: (val: boolean) => void
+}
+
+export function Checkbox(props: ICheckboxProps) {
+  const [id] = useState(uuid())
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (props.onChange) {
+      props.onChange(e.target.checked)
+    }
+  }
+
+  return (
+    <div className={className(Style.item, Style.itemCheckbox)}>
+      <div className={Style.title}>{props.title}</div>
+      <div className={Style.control}>
+        <label className={Style.toggleSwitch}>
+          <input
+            id={id}
+            type="checkbox"
+            checked={props.value}
+            onChange={onChange}
+          ></input>
+          <span className={Style.slider}></span>
+        </label>
+        <label className={Style.toggleLabel} htmlFor={id}>
+          {props.description || (props.value ? t('on') : t('off'))}
+        </label>
       </div>
     </div>
   )

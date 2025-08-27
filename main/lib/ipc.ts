@@ -18,6 +18,7 @@ import {
 } from '../../common/types'
 import isMac from 'licia/isMac'
 import endWith from 'licia/endWith'
+import * as terminal from '../window/terminal'
 
 const memStore = getMemStore()
 
@@ -108,4 +109,5 @@ export function init() {
     return true
   })
   handleEvent('getOpenFile', getOpenFile)
+  handleEvent('showTerminal', () => terminal.showWin())
 }

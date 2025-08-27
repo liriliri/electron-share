@@ -43,4 +43,5 @@ export default {
     ipcRenderer.on(event, listener)
     return () => ipcRenderer.off(event, listener)
   },
+  showTerminal: invoke('showTerminal'),
 }

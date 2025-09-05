@@ -11,6 +11,7 @@ import {
   IpcOpenExternal,
   IpcOpenPath,
   IpcOpenWindow,
+  IpcResolveResources,
   IpcSendToWindow,
   IpcSetStore,
   IpcShowContextMenu,
@@ -44,4 +45,5 @@ export default {
     return () => ipcRenderer.off(event, listener)
   },
   showTerminal: invoke('showTerminal'),
+  resolveResources: invoke<IpcResolveResources>('resolveResources'),
 }

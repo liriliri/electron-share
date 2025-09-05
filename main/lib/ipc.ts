@@ -1,7 +1,7 @@
 import { dialog, shell, app, ipcMain, BrowserWindow } from 'electron'
 import * as window from './window'
 import contextMenu from './contextMenu'
-import { getOpenFileFromArgv, handleEvent } from './util'
+import { getOpenFileFromArgv, handleEvent, resolveResources } from './util'
 import { getMemStore } from './store'
 import log from '../../common/log'
 import {
@@ -10,6 +10,7 @@ import {
   IpcOpenExternal,
   IpcOpenPath,
   IpcOpenWindow,
+  IpcResolveResources,
   IpcSendToWindow,
   IpcSetStore,
   IpcShowItemInFolder,
@@ -110,4 +111,7 @@ export function init() {
   })
   handleEvent('getOpenFile', getOpenFile)
   handleEvent('showTerminal', () => terminal.showWin())
+  handleEvent('resolveResources', <IpcResolveResources>(
+    ((p: string) => resolveResources(p))
+  ))
 }

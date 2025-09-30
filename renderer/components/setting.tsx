@@ -6,7 +6,7 @@ import map from 'licia/map'
 import toNum from 'licia/toNum'
 import toStr from 'licia/toStr'
 import uuid from 'licia/uuid'
-import { t } from '../../../common/util'
+import { t } from '../../common/i18n'
 
 interface IRowProps {
   className?: string

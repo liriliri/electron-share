@@ -31,5 +31,9 @@
   "updateAvailable": "A new version is available, do you want to download it?",
   "updateErr": "Failed to check for updates",
   "updateNotAvailable": "There are currently no updates available",
-  "version": "Version"
+  "version": "Version",
+  "processManager": "Process Manager",
+  "processName": "Process Name",
+  "memory": "Memory",
+  "type": "Type"
 }

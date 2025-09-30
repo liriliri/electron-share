@@ -1,7 +1,7 @@
 import { LunaSettingHtml } from 'luna-setting/react'
 import LunaSetting from 'luna-setting'
 import Style from './SettingPath.module.scss'
-import { t } from '../../../common/util'
+import { t } from '../../common/i18n'
 import { OpenDialogOptions } from 'electron'
 import isEmpty from 'licia/isEmpty'
 

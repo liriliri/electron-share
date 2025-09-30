@@ -31,5 +31,9 @@
   "updateAvailable": "有可用的更新，是否下载？",
   "updateErr": "检查更新失败",
   "updateNotAvailable": "当前没有可用的更新",
-  "version": "版本"
+  "version": "版本",
+  "processManager": "进程管理器",
+  "processName": "进程名称",
+  "memory": "内存",
+  "type": "类型"
 }

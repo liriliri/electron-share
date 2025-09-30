@@ -5,6 +5,7 @@ import {
   IpcGetLanguage,
   IpcGetLogs,
   IpcGetOpenFile,
+  IpcGetProcessData,
   IpcGetStore,
   IpcGetTheme,
   IpcIsCustomTitlebar,
@@ -46,4 +47,5 @@ export default {
   },
   showTerminal: invoke('showTerminal'),
   resolveResources: invoke<IpcResolveResources>('resolveResources'),
+  getProcessData: invoke<IpcGetProcessData>('getProcessData'),
 }

@@ -43,3 +43,12 @@ export type IpcGetLogs = () => string[]
 export type IpcIsCustomTitlebar = () => boolean
 export type IpcGetOpenFile = (ext: string) => string | void
 export type IpcResolveResources = (p: string) => string
+
+export interface IProcess {
+  name: string
+  pid: number
+  cpu: number
+  memory: number
+  type: string
+}
+export type IpcGetProcessData = () => Array<IProcess>

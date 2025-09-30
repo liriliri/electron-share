@@ -1,6 +1,6 @@
 import Style from './App.module.scss'
 import icon from '../../../renderer/assets/icon.png'
-import { t } from '../../../common/util'
+import { t } from '../../common/i18n'
 
 export default function App() {
   return (

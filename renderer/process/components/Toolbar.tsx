@@ -11,6 +11,7 @@ import ToolbarIcon from '../../components/ToolbarIcon'
 import LunaModal from 'luna-modal'
 import { isDev } from '../../../common/util'
 import toBool from 'licia/toBool'
+import Style from './Toolbar.module.scss'
 
 export default observer(function Toolbar() {
   async function stop() {
@@ -42,7 +43,7 @@ export default observer(function Toolbar() {
   }
 
   return (
-    <LunaToolbar>
+    <LunaToolbar className={Style.container}>
       <LunaToolbarInput
         keyName="filter"
         value={store.filter}

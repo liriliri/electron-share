@@ -35,5 +35,9 @@
   "processManager": "进程管理器",
   "processName": "进程名称",
   "memory": "内存",
-  "type": "类型"
+  "type": "类型",
+  "totalProcess": "共 {{total}} 个进程",
+  "stop": "停止",
+  "killProcessConfirm": "确定要停止 {{name}} 吗？",
+  "inspect": "调试"
 }

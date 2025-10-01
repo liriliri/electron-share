@@ -35,5 +35,9 @@
   "processManager": "Process Manager",
   "processName": "Process Name",
   "memory": "Memory",
-  "type": "Type"
+  "type": "Type",
+  "totalProcess": "{{total}} total processes",
+  "stop": "Stop",
+  "killProcessConfirm": "Are you sure you want to stop {{name}}?",
+  "inspect": "Inspect"
 }

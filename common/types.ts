@@ -50,5 +50,8 @@ export interface IProcess {
   cpu: number
   memory: number
   type: string
+  webContentsId?: number
 }
 export type IpcGetProcessData = () => Array<IProcess>
+export type IpcKillProcess = (pid: number) => void
+export type IpcOpenDevtools = (webContentsId: number) => void

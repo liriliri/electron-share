@@ -21,6 +21,7 @@ export default observer(function ProcessManager() {
       memory: fileSize(process.memory * 1024),
       cpu: (process.cpu * 100).toFixed(1),
       type: process.type,
+      webContentsId: process.webContentsId,
     }
   })
 
@@ -28,6 +29,8 @@ export default observer(function ProcessManager() {
     <div className={Style.container}>
       <LunaDataGrid
         className={Style.processes}
+        onSelect={(node) => store.select(node.data as any)}
+        onDeselect={() => store.select(null)}
         filter={store.filter}
         columns={columns}
         selectable={true}

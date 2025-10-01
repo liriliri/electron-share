@@ -2,7 +2,12 @@ import { BrowserWindow, app, webContents } from 'electron'
 import * as window from '../../main/lib/window'
 import once from 'licia/once'
 import { handleEvent } from '../lib/util'
-import { IpcGetProcessData, IProcess } from '../../common/types'
+import {
+  IpcGetProcessData,
+  IpcKillProcess,
+  IpcOpenDevtools,
+  IProcess,
+} from '../../common/types'
 import map from 'licia/map'
 
 let win: BrowserWindow | null = null
@@ -52,6 +57,7 @@ const getProcessData: IpcGetProcessData = () => {
     const webContent = allWebContents[metric.pid]
     if (webContent) {
       ret.name = webContent.getTitle() || ret.name
+      ret.webContentsId = webContent.id
     }
     if (metric.pid === process.pid) {
       ret.name = 'Main Process'
@@ -63,4 +69,11 @@ const getProcessData: IpcGetProcessData = () => {
 
 const initIpc = once(() => {
   handleEvent('getProcessData', getProcessData)
+  handleEvent('killProcess', <IpcKillProcess>((pid) => process.kill(pid)))
+  handleEvent('openDevtools', <IpcOpenDevtools>((webContentsId) => {
+    const wc = webContents.fromId(webContentsId)
+    if (wc) {
+      wc.openDevTools({ mode: 'detach' })
+    }
+  }))
 })

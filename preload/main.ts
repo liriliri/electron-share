@@ -9,6 +9,8 @@ import {
   IpcGetStore,
   IpcGetTheme,
   IpcIsCustomTitlebar,
+  IpcKillProcess,
+  IpcOpenDevtools,
   IpcOpenExternal,
   IpcOpenPath,
   IpcOpenWindow,
@@ -48,4 +50,6 @@ export default {
   showTerminal: invoke('showTerminal'),
   resolveResources: invoke<IpcResolveResources>('resolveResources'),
   getProcessData: invoke<IpcGetProcessData>('getProcessData'),
+  killProcess: invoke<IpcKillProcess>('killProcess'),
+  openDevtools: invoke<IpcOpenDevtools>('openDevtools'),
 }

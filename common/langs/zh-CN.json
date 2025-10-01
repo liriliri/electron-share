@@ -39,5 +39,8 @@
   "totalProcess": "共 {{total}} 个进程",
   "stop": "停止",
   "killProcessConfirm": "确定要停止 {{name}} 吗？",
-  "inspect": "调试"
+  "inspect": "调试",
+  "mainProcess": "主进程",
+  "debugMainProcess": "调试主进程",
+  "openUserDataDir": "打开用户数据目录"
 }

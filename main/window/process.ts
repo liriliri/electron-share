@@ -9,6 +9,9 @@ import {
   IProcess,
 } from '../../common/types'
 import map from 'licia/map'
+import { t } from '../../common/i18n'
+import { isDev } from '../../common/util'
+import isEmpty from 'licia/isEmpty'
 
 let win: BrowserWindow | null = null
 
@@ -37,6 +40,40 @@ export function showWin() {
   window.loadPage(win, { page: 'process' })
 }
 
+let debugWin: BrowserWindow | null = null
+
+export async function debugMainProcess() {
+  if (!isDev()) {
+    return
+  }
+
+  if (debugWin) {
+    debugWin.focus()
+    return
+  }
+
+  const json = await fetch('http://127.0.0.1:9229/json/list').then((res) =>
+    res.json()
+  )
+
+  if (!isEmpty(json)) {
+    const url = json[0].devtoolsFrontendUrl
+    debugWin = window.create({
+      name: 'devtools',
+      preload: false,
+      customTitlebar: false,
+      menu: false,
+    })
+
+    debugWin.loadURL(url)
+
+    debugWin.on('close', () => {
+      debugWin?.destroy()
+      debugWin = null
+    })
+  }
+}
+
 const getProcessData: IpcGetProcessData = () => {
   const allWebContents = Object.fromEntries(
     map(webContents.getAllWebContents(), (webContent) => [
@@ -60,7 +97,7 @@ const getProcessData: IpcGetProcessData = () => {
       ret.webContentsId = webContent.id
     }
     if (metric.pid === process.pid) {
-      ret.name = 'Main Process'
+      ret.name = t('mainProcess')
     }
 
     return ret
@@ -76,4 +113,5 @@ const initIpc = once(() => {
       wc.openDevTools({ mode: 'detach' })
     }
   }))
+  handleEvent('debugMainProcess', debugMainProcess)
 })

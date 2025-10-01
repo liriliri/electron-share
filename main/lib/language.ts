@@ -1,5 +1,5 @@
 import { getSettingsStore } from '../../../main/lib/store'
-import { i18n, hasLocale } from '../../../common/util'
+import { i18n, hasLocale } from '../../common/i18n'
 import { app } from 'electron'
 import { handleEvent } from './util'
 import log from '../../common/log'

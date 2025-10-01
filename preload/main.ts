@@ -52,4 +52,5 @@ export default {
   getProcessData: invoke<IpcGetProcessData>('getProcessData'),
   killProcess: invoke<IpcKillProcess>('killProcess'),
   openDevtools: invoke<IpcOpenDevtools>('openDevtools'),
+  debugMainProcess: invoke('debugMainProcess'),
 }

@@ -39,5 +39,8 @@
   "totalProcess": "{{total}} total processes",
   "stop": "Stop",
   "killProcessConfirm": "Are you sure you want to stop {{name}}?",
-  "inspect": "Inspect"
+  "inspect": "Inspect",
+  "mainProcess": "Main Process",
+  "debugMainProcess": "Debug Main Process",
+  "openUserDataDir": "Open User Data Directory"
 }

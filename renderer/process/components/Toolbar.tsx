@@ -9,6 +9,8 @@ import store from '../store'
 import { t } from '../../../common/i18n'
 import ToolbarIcon from '../../components/ToolbarIcon'
 import LunaModal from 'luna-modal'
+import { isDev } from '../../../common/util'
+import toBool from 'licia/toBool'
 
 export default observer(function Toolbar() {
   async function stop() {
@@ -23,7 +25,20 @@ export default observer(function Toolbar() {
   }
 
   function inspect() {
-    main.openDevtools(store.process!.webContentsId!)
+    const process = store.process!
+    if (process.webContentsId) {
+      main.openDevtools(process.webContentsId!)
+    } else {
+      main.debugMainProcess()
+    }
+  }
+
+  let isDebuggable = false
+  const process = store.process
+  if (process) {
+    isDebuggable = toBool(
+      process.webContentsId || (isDev() && process.type === 'Browser')
+    )
   }
 
   return (
@@ -39,7 +54,7 @@ export default observer(function Toolbar() {
       />
       <LunaToolbarSpace />
       <ToolbarIcon
-        disabled={store.process === null || !store.process.webContentsId}
+        disabled={!isDebuggable}
         icon="debug"
         title={t('inspect')}
         onClick={inspect}

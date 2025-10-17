@@ -18,11 +18,24 @@ export function init() {
   logger.info('init')
 
   const lang = store.get('language')
-  let systemLanguage = 'en-US'
-  if (hasLocale(app.getLocale())) {
-    systemLanguage = app.getLocale()
+  const systemLanguage = resolveLocale(app.getLocale()) || 'en-US'
+
+  if (lang === 'system') {
+    language = systemLanguage
+  } else {
+    language = resolveLocale(lang) || systemLanguage
   }
-  language = lang === 'system' ? systemLanguage : lang
+
   i18n.locale(language)
   handleEvent('getLanguage', get)
+}
+
+function resolveLocale(locale: string) {
+  if (hasLocale(locale)) {
+    return locale
+  }
+  const [lang] = locale.split('-')
+  if (hasLocale(lang)) {
+    return lang
+  }
 }

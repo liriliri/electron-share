@@ -2,6 +2,7 @@ import { invoke } from './util'
 import types from 'licia/types'
 import { ipcRenderer } from 'electron'
 import {
+  IpcGetCpuAndMem,
   IpcGetLanguage,
   IpcGetLogs,
   IpcGetOpenFile,
@@ -53,4 +54,5 @@ export default {
   killProcess: invoke<IpcKillProcess>('killProcess'),
   openDevtools: invoke<IpcOpenDevtools>('openDevtools'),
   debugMainProcess: invoke('debugMainProcess'),
+  getCpuAndMem: invoke<IpcGetCpuAndMem>('getCpuAndMem'),
 }

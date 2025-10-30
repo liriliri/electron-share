@@ -5,14 +5,15 @@ import { t } from '../../../common/i18n'
 import store from '../store'
 import Style from './ProcessManager.module.scss'
 import { useRef } from 'react'
-import { useWindowResize } from '../../lib/hooks'
+import { useResizeSensor } from '../../lib/hooks'
 import map from 'licia/map'
 import fileSize from 'licia/fileSize'
 
 export default observer(function ProcessManager() {
   const dataGridRef = useRef<DataGrid>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  useWindowResize(() => dataGridRef.current?.fit())
+  useResizeSensor(containerRef, () => dataGridRef.current?.fit())
 
   const processes = map(store.processes, (process) => {
     return {
@@ -26,7 +27,7 @@ export default observer(function ProcessManager() {
   })
 
   return (
-    <div className={Style.container}>
+    <div className={Style.container} ref={containerRef}>
       <LunaDataGrid
         className={Style.processes}
         onSelect={(node) => store.select(node.data as any)}

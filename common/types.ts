@@ -52,6 +52,7 @@ export interface IProcess {
   type: string
   webContentsId?: number
 }
-export type IpcGetProcessData = () => Array<IProcess>
+export type IpcGetProcessData = () => Promise<Array<IProcess>>
 export type IpcKillProcess = (pid: number) => void
 export type IpcOpenDevtools = (webContentsId: number) => void
+export type IpcGetCpuAndMem = () => Promise<{ cpu: number; memory: number }>

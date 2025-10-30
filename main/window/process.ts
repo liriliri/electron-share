@@ -3,6 +3,7 @@ import * as window from '../../main/lib/window'
 import once from 'licia/once'
 import { handleEvent } from '../lib/util'
 import {
+  IpcGetCpuAndMem,
   IpcGetProcessData,
   IpcKillProcess,
   IpcOpenDevtools,
@@ -12,6 +13,8 @@ import map from 'licia/map'
 import { t } from '../../common/i18n'
 import { isDev } from '../../common/util'
 import isEmpty from 'licia/isEmpty'
+import singleton from 'licia/singleton'
+import each from 'licia/each'
 
 let win: BrowserWindow | null = null
 
@@ -26,10 +29,9 @@ export function showWin() {
   win = window.create({
     name: 'process',
     width: 640,
-    height: 320,
+    height: 480,
     minWidth: 640,
-    minHeight: 320,
-    menu: false,
+    minHeight: 480,
   })
 
   win.on('close', () => {
@@ -74,7 +76,13 @@ export async function debugMainProcess() {
   }
 }
 
-const getProcessData: IpcGetProcessData = () => {
+const processCallbacks: Array<() => Promise<IProcess | void>> = []
+
+export function addProcess(callback: () => Promise<IProcess | void>) {
+  processCallbacks.push(callback)
+}
+
+const getProcessData: IpcGetProcessData = singleton(async () => {
   const allWebContents = Object.fromEntries(
     map(webContents.getAllWebContents(), (webContent) => [
       webContent.getOSProcessId(),
@@ -82,7 +90,7 @@ const getProcessData: IpcGetProcessData = () => {
     ])
   )
 
-  return map(app.getAppMetrics(), (metric) => {
+  const processData = map(app.getAppMetrics(), (metric) => {
     const ret: IProcess = {
       name: metric.name || metric.serviceName || '',
       pid: metric.pid,
@@ -102,10 +110,35 @@ const getProcessData: IpcGetProcessData = () => {
 
     return ret
   })
+
+  for (let i = 0, len = processCallbacks.length; i < len; i++) {
+    const callback = processCallbacks[i]
+    const process = await callback()
+    if (process) {
+      processData.push(process)
+    }
+  }
+
+  return processData
+})
+
+const getCpuAndMem: IpcGetCpuAndMem = async () => {
+  const processData = await getProcessData()
+  let cpu = 0
+  let memory = 0
+  each(processData, (p) => {
+    cpu += p.cpu
+    memory += p.memory
+  })
+  return {
+    cpu,
+    memory,
+  }
 }
 
 const initIpc = once(() => {
   handleEvent('getProcessData', getProcessData)
+  handleEvent('getCpuAndMem', getCpuAndMem)
   handleEvent('killProcess', <IpcKillProcess>((pid) => process.kill(pid)))
   handleEvent('openDevtools', <IpcOpenDevtools>((webContentsId) => {
     const wc = webContents.fromId(webContentsId)

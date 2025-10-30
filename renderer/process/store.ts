@@ -27,7 +27,7 @@ class Store extends BaseStore {
   }
   async init() {
     this.refresh()
-    setInterval(() => this.refresh(), 5000)
+    setInterval(() => this.refresh(), 2000)
   }
   async refresh() {
     const processes = await main.getProcessData()

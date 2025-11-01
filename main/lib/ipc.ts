@@ -20,6 +20,7 @@ import {
 import isMac from 'licia/isMac'
 import endWith from 'licia/endWith'
 import * as terminal from '../window/terminal'
+import * as processWindow from '../window/process'
 
 const memStore = getMemStore()
 
@@ -111,7 +112,9 @@ export function init() {
   })
   handleEvent('getOpenFile', getOpenFile)
   handleEvent('showTerminal', () => terminal.showWin())
+  handleEvent('showProcess', () => processWindow.showWin())
   handleEvent('resolveResources', <IpcResolveResources>(
     ((p: string) => resolveResources(p))
   ))
+  handleEvent('getCpuAndMem', processWindow.getCpuAndMem)
 }

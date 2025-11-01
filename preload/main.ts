@@ -55,4 +55,5 @@ export default {
   openDevtools: invoke<IpcOpenDevtools>('openDevtools'),
   debugMainProcess: invoke('debugMainProcess'),
   getCpuAndMem: invoke<IpcGetCpuAndMem>('getCpuAndMem'),
+  showProcess: invoke('showProcess'),
 }

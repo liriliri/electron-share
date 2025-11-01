@@ -122,7 +122,7 @@ const getProcessData: IpcGetProcessData = singleton(async () => {
   return processData
 })
 
-const getCpuAndMem: IpcGetCpuAndMem = async () => {
+export const getCpuAndMem: IpcGetCpuAndMem = async () => {
   const processData = await getProcessData()
   let cpu = 0
   let memory = 0
@@ -138,7 +138,6 @@ const getCpuAndMem: IpcGetCpuAndMem = async () => {
 
 const initIpc = once(() => {
   handleEvent('getProcessData', getProcessData)
-  handleEvent('getCpuAndMem', getCpuAndMem)
   handleEvent('killProcess', <IpcKillProcess>((pid) => process.kill(pid)))
   handleEvent('openDevtools', <IpcOpenDevtools>((webContentsId) => {
     const wc = webContents.fromId(webContentsId)

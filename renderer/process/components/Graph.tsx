@@ -13,7 +13,7 @@ export default observer(function Graph() {
   })
 
   const cpuData = useCallback(() => {
-    return (+dataRef.current.cpu * 10).toFixed(1)
+    return +dataRef.current.cpu.toFixed(1)
   }, [])
 
   const memData = useCallback(() => {

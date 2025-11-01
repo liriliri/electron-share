@@ -83,6 +83,8 @@ export function addProcess(callback: () => Promise<IProcess | void>) {
   processCallbacks.push(callback)
 }
 
+const cpuNum = os.cpus().length
+
 const getProcessData: IpcGetProcessData = singleton(async () => {
   const allWebContents = Object.fromEntries(
     map(webContents.getAllWebContents(), (webContent) => [
@@ -95,7 +97,7 @@ const getProcessData: IpcGetProcessData = singleton(async () => {
     const ret: IProcess = {
       name: metric.name || metric.serviceName || '',
       pid: metric.pid,
-      cpu: metric.cpu.percentCPUUsage,
+      cpu: metric.cpu.percentCPUUsage * cpuNum,
       memory: metric.memory.workingSetSize,
       type: metric.type,
     }
@@ -132,7 +134,7 @@ export const getCpuAndMem: IpcGetCpuAndMem = async () => {
     memory += p.memory
   })
   return {
-    cpu: cpu / os.cpus().length,
+    cpu: cpu / cpuNum,
     memory,
   }
 }

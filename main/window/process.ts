@@ -15,6 +15,7 @@ import { isDev } from '../../common/util'
 import isEmpty from 'licia/isEmpty'
 import singleton from 'licia/singleton'
 import each from 'licia/each'
+import os from 'os'
 
 let win: BrowserWindow | null = null
 
@@ -131,7 +132,7 @@ export const getCpuAndMem: IpcGetCpuAndMem = async () => {
     memory += p.memory
   })
   return {
-    cpu,
+    cpu: cpu / os.cpus().length,
     memory,
   }
 }

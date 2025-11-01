@@ -20,7 +20,7 @@ export default observer(function ProcessManager() {
       name: process.name,
       pid: process.pid,
       memory: fileSize(process.memory * 1024),
-      cpu: (process.cpu * 100).toFixed(1),
+      cpu: (process.cpu * 10).toFixed(1),
       type: process.type,
       webContentsId: process.webContentsId,
     }

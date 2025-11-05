@@ -3,6 +3,7 @@ import types from 'licia/types'
 import { ipcRenderer } from 'electron'
 import {
   IpcGetCpuAndMem,
+  IpcGetFileIcon,
   IpcGetLanguage,
   IpcGetLogs,
   IpcGetOpenFile,
@@ -56,4 +57,5 @@ export default {
   debugMainProcess: invoke('debugMainProcess'),
   getCpuAndMem: invoke<IpcGetCpuAndMem>('getCpuAndMem'),
   showProcess: invoke('showProcess'),
+  getFileIcon: invoke<IpcGetFileIcon>('getFileIcon'),
 }

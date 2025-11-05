@@ -56,3 +56,4 @@ export type IpcGetProcessData = () => Promise<Array<IProcess>>
 export type IpcKillProcess = (pid: number) => void
 export type IpcOpenDevtools = (webContentsId: number) => void
 export type IpcGetCpuAndMem = () => Promise<{ cpu: number; memory: number }>
+export type IpcGetFileIcon = (ext: string) => Promise<string>

@@ -1,4 +1,4 @@
-import { colorPrimary } from '../../../common/theme'
+import { colorPrimary } from 'common/theme'
 
 export interface ILoadingProps {
   className?: string

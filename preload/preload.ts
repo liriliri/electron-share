@@ -1,5 +1,5 @@
 import { Titlebar, TitlebarColor } from 'custom-electron-titlebar'
-import { colorBgContainer, colorBgContainerDark } from '../../common/theme'
+import { colorBgContainer, colorBgContainerDark } from 'common/theme'
 import getUrlParam from 'licia/getUrlParam'
 import isMac from 'licia/isMac'
 import $ from 'licia/$'

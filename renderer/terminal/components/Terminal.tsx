@@ -14,7 +14,7 @@ import {
   colorPrimary,
   colorText,
   colorTextDark,
-} from '../../../../common/theme'
+} from 'common/theme'
 import store from '../store'
 import '@xterm/xterm/css/xterm.css'
 import contextMenu from '../../lib/contextMenu'

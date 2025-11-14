@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import Style from './Graph.module.scss'
 import LunaPerformanceMonitor from 'luna-performance-monitor/react'
 import store from '../store'
-import { colorPrimary, colorPrimaryDark } from '../../../../common/theme'
+import { colorPrimary, colorPrimaryDark } from 'common/theme'
 import { t } from '../../../common/i18n'
 import { useCallback, useEffect, useRef } from 'react'
 

@@ -42,5 +42,8 @@
   "inspect": "Inspect",
   "mainProcess": "Main Process",
   "debugMainProcess": "Debug Main Process",
-  "openUserDataDir": "Open User Data Directory"
+  "openUserDataDir": "Open User Data Directory",
+  "fileNotSelected": "File not selected",
+  "noPreview": "No preview",
+  "commonErr": "Something went wrong"
 }

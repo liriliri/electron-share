@@ -17,11 +17,13 @@ import {
   IpcShowItemInFolder,
   IpcShowOpenDialog,
   IpcShowSaveDialog,
+  IpcShowVideo,
 } from '../../common/types'
 import isMac from 'licia/isMac'
 import endWith from 'licia/endWith'
 import types from 'licia/types'
 import * as terminal from '../window/terminal'
+import * as video from '../window/video'
 import * as processWindow from '../window/process'
 import fs from 'fs-extra'
 import path from 'path'
@@ -144,6 +146,7 @@ export function init() {
   })
   handleEvent('getOpenFile', getOpenFile)
   handleEvent('showTerminal', () => terminal.showWin())
+  handleEvent('showVideo', <IpcShowVideo>((url) => video.showWin(url)))
   handleEvent('showProcess', () => processWindow.showWin())
   handleEvent('resolveResources', <IpcResolveResources>(
     ((p: string) => resolveResources(p))

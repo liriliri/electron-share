@@ -23,6 +23,7 @@ import {
   IpcShowItemInFolder,
   IpcShowOpenDialog,
   IpcShowSaveDialog,
+  IpcShowVideo,
 } from '../common/types'
 
 export default {
@@ -58,4 +59,5 @@ export default {
   getCpuAndMem: invoke<IpcGetCpuAndMem>('getCpuAndMem'),
   showProcess: invoke('showProcess'),
   getFileIcon: invoke<IpcGetFileIcon>('getFileIcon'),
+  showVideo: invoke<IpcShowVideo>('showVideo'),
 }

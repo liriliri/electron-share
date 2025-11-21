@@ -42,5 +42,8 @@
   "inspect": "调试",
   "mainProcess": "主进程",
   "debugMainProcess": "调试主进程",
-  "openUserDataDir": "打开用户数据目录"
+  "openUserDataDir": "打开用户数据目录",
+  "fileNotSelected": "未选择文件",
+  "noPreview": "没有预览",
+  "commonErr": "出错了"
 }

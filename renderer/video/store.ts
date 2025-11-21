@@ -19,7 +19,7 @@ class Store extends BaseStore {
   }
   setUrl(url: string) {
     this.url = url
-    preload.setTitle(last(url.split('/')))
+    preload.setTitle(decodeURIComponent(last(url.split('/'))))
   }
   private bindEvent() {
     main.on('setVideoUrl', (url: string) => this.setUrl(url))

@@ -29,6 +29,7 @@ const store = getWindowStore()
 interface IWinOptions {
   name: string
   maximized?: boolean
+  titlebar?: boolean
   customTitlebar?: boolean
   minWidth?: number
   minHeight?: number
@@ -48,6 +49,7 @@ let focusedWin: BrowserWindow | null = null
 
 export function create(opts: IWinOptions) {
   defaults(opts, {
+    titlebar: true,
     customTitlebar: true,
     preload: true,
     maximized: false,
@@ -130,13 +132,20 @@ export function create(opts: IWinOptions) {
       sandbox: false,
     }
   }
-  if (winOptions.customTitlebar) {
-    options.titleBarStyle = 'hidden'
-    options.titleBarOverlay = true
+
+  if (winOptions.titlebar) {
+    if (winOptions.customTitlebar) {
+      options.titleBarStyle = 'hidden'
+      options.titleBarOverlay = true
+    }
+  } else {
+    options.frame = false
   }
 
+  logger.debug('create', opts.name, options)
   const win = new BrowserWindow(options)
-  ;(win as any).customTitlebar = winOptions.customTitlebar
+  ;(win as any).customTitlebar =
+    winOptions.titlebar && winOptions.customTitlebar
   if (!winOptions.menu) {
     win.setMenu(null)
   }
@@ -174,7 +183,7 @@ export function create(opts: IWinOptions) {
   })
   wins[opts.name] = win
 
-  if (winOptions.customTitlebar) {
+  if (winOptions.titlebar && winOptions.customTitlebar) {
     attachTitlebarToWindow(win)
     win.setMinimumSize(winOptions.minWidth, winOptions.minHeight)
   }

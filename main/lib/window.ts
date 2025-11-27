@@ -47,19 +47,21 @@ const visibleWins: BrowserWindow[] = []
 const wins: types.PlainObj<BrowserWindow> = {}
 let focusedWin: BrowserWindow | null = null
 
+const defaultOptions: Partial<IWinOptions> = {
+  titlebar: true,
+  customTitlebar: true,
+  preload: true,
+  maximized: false,
+  minWidth: 1280,
+  minHeight: 850,
+  width: 1280,
+  height: 850,
+  menu: false,
+  resizable: true,
+}
+
 export function create(opts: IWinOptions) {
-  defaults(opts, {
-    titlebar: true,
-    customTitlebar: true,
-    preload: true,
-    maximized: false,
-    minWidth: 1280,
-    minHeight: 850,
-    width: 1280,
-    height: 850,
-    menu: false,
-    resizable: true,
-  })
+  defaults(opts, defaultOptions)
 
   if (isUndef(opts.onSavePos)) {
     opts.onSavePos = function () {
@@ -189,6 +191,10 @@ export function create(opts: IWinOptions) {
   }
 
   return win
+}
+
+export function setDefaultOptions(opts: Partial<IWinOptions>) {
+  extend(defaultOptions, opts)
 }
 
 export function sendAll(channel: string, ...args: any[]) {

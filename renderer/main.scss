@@ -66,18 +66,21 @@
 }
 
 .platform-windows {
-  --luna-font-family: 'MiSans' !important;
+  --luna-font-family: system-ui, 'Segoe UI', 'Microsoft YaHei UI', sans-serif !important;
+  @media (min-resolution: 1.5dppx) {
+    --luna-font-family: 'MiSans', system-ui, sans-serif !important;
+  }
   button,
   select,
   input,
   .cet-titlebar {
-    font-family: 'MiSans' !important;
+    font-family: var(--luna-font-family) !important;
   }
 }
 
 body {
   &.platform-windows {
-    font-family: 'MiSans' !important;
+    font-family: var(--luna-font-family) !important;
   }
   margin: 0;
   overflow: hidden;

@@ -45,5 +45,6 @@
   "openUserDataDir": "打开用户数据目录",
   "fileNotSelected": "未选择文件",
   "noPreview": "没有预览",
-  "commonErr": "出错了"
+  "commonErr": "出错了",
+  "useNativeTitlebar": "使用原生标题栏"
 }

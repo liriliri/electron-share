@@ -45,5 +45,6 @@
   "openUserDataDir": "Open User Data Directory",
   "fileNotSelected": "File not selected",
   "noPreview": "No preview",
-  "commonErr": "Something went wrong"
+  "commonErr": "Something went wrong",
+  "useNativeTitlebar": "Use Native Titlebar"
 }

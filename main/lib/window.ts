@@ -153,6 +153,9 @@ export function create(opts: IWinOptions) {
   }
 
   const onSavePos = debounce(() => {
+    if (win.isDestroyed()) {
+      return
+    }
     if (!win.isFullScreen()) {
       winOptions.onSavePos()
     }

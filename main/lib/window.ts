@@ -177,7 +177,10 @@ export function create(opts: IWinOptions) {
   // Make sure the window is shown even if the ready-to-show event is not emitted
   setTimeout(() => readyAndShow(), 1000)
 
-  win.on('show', () => visibleWins.push(win))
+  win.on('show', () => {
+    visibleWins.push(win)
+    win.webContents.send('showWin')
+  })
   win.on('focus', () => {
     focusedWin = win
     win.webContents.send('focusWin')

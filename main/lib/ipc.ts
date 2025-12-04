@@ -124,6 +124,22 @@ export function init() {
       contextMenu(x, y, template)
     }
   })
+  ipcMain.handle('closeWin', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    if (win) {
+      win.close()
+    }
+  })
+  ipcMain.handle('toggleWinMaximize', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    if (win) {
+      if (win.isMaximized()) {
+        win.unmaximize()
+      } else {
+        win.maximize()
+      }
+    }
+  })
   handleEvent('relaunch', () => {
     app.relaunch()
     app.exit()

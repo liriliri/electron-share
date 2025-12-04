@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   updateTheme()
-  mainObj.on('updateTheme', updateTheme)
+  mainObj.on('changeTheme', updateTheme)
 })
 
 async function updateTheme() {

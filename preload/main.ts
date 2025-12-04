@@ -60,4 +60,6 @@ export default {
   showProcess: invoke('showProcess'),
   getFileIcon: invoke<IpcGetFileIcon>('getFileIcon'),
   showVideo: invoke<IpcShowVideo>('showVideo'),
+  closeWin: invoke('closeWin'),
+  toggleWinMaximize: invoke('toggleWinMaximize'),
 }

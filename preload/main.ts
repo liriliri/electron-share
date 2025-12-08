@@ -62,4 +62,5 @@ export default {
   showVideo: invoke<IpcShowVideo>('showVideo'),
   closeWin: invoke('closeWin'),
   toggleWinMaximize: invoke('toggleWinMaximize'),
+  hideWin: invoke('hideWin'),
 }

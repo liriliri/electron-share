@@ -130,6 +130,12 @@ export function init() {
       win.close()
     }
   })
+  ipcMain.handle('hideWin', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    if (win) {
+      win.hide()
+    }
+  })
   ipcMain.handle('toggleWinMaximize', (event) => {
     const win = BrowserWindow.fromWebContents(event.sender)
     if (win) {

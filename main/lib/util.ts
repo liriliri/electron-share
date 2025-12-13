@@ -39,11 +39,11 @@ export function resolveResources(p) {
   return ret
 }
 
-export function getUserDataPath(p: string) {
-  if (isDev()) {
-    return path.resolve(app.getPath('appData'), pkg.productName, p)
-  }
+if (isDev()) {
+  app.setPath('userData', path.resolve(app.getPath('appData'), pkg.productName))
+}
 
+export function getUserDataPath(p: string) {
   return path.resolve(app.getPath('userData'), p)
 }
 

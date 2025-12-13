@@ -39,6 +39,7 @@ interface IWinOptions {
   menu?: boolean
   x?: number
   y?: number
+  skipTaskbar?: boolean
   onSavePos?: types.AnyFn
   resizable?: boolean
 }
@@ -57,6 +58,7 @@ const defaultOptions: Partial<IWinOptions> = {
   width: 1280,
   height: 850,
   menu: false,
+  skipTaskbar: false,
   resizable: true,
 }
 
@@ -90,6 +92,7 @@ export function create(opts: IWinOptions) {
     minWidth: winOptions.minWidth,
     minHeight: winOptions.minHeight,
     show: false,
+    skipTaskbar: winOptions.skipTaskbar,
     resizable: winOptions.resizable,
   }
   if (!options.resizable) {

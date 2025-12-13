@@ -46,5 +46,6 @@
   "fileNotSelected": "File not selected",
   "noPreview": "No preview",
   "commonErr": "Something went wrong",
-  "useNativeTitlebar": "Use Native Titlebar"
+  "useNativeTitlebar": "Use Native Titlebar",
+  "openAtLogin": "Open at login"
 }

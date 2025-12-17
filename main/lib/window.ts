@@ -190,6 +190,7 @@ export function create(opts: IWinOptions) {
   })
   win.on('hide', () => remove(visibleWins, (window) => window === win))
   win.on('closed', () => {
+    remove(visibleWins, (window) => window === win)
     delete wins[opts.name]
   })
   wins[opts.name] = win
@@ -241,6 +242,10 @@ export function loadPage(win: BrowserWindow, q: types.PlainObj<string> = {}) {
 
 export function getWin(name: string) {
   return wins[name]
+}
+
+export function getVisibleWins() {
+  return visibleWins
 }
 
 export function getFocusedWin() {

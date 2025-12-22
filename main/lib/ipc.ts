@@ -28,7 +28,9 @@ import * as processWindow from '../window/process'
 import fs from 'fs-extra'
 import path from 'path'
 import os from 'os'
+import { getSettingsStore } from '../../../main/lib/store'
 
+const settingsStore = getSettingsStore()
 const memStore = getMemStore()
 
 const logger = log('ipc')
@@ -92,6 +94,15 @@ const getFileIcon: IpcGetFileIcon = async (ext) => {
 export function init() {
   logger.info('init')
 
+  handleEvent('setSettingsStore', <IpcSetStore>((name, val) => {
+    settingsStore.set(name, val)
+  }))
+  handleEvent('getSettingsStore', <IpcGetStore>(
+    ((name) => settingsStore.get(name))
+  ))
+  settingsStore.on('change', (name, val) => {
+    window.sendAll('changeSettingsStore', name, val)
+  })
   handleEvent('showOpenDialog', <IpcShowOpenDialog>(
     ((options) => dialog.showOpenDialog(options))
   ))

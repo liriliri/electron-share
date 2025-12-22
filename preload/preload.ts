@@ -4,7 +4,7 @@ import getUrlParam from 'licia/getUrlParam'
 import isMac from 'licia/isMac'
 import $ from 'licia/$'
 import mainObj from './main'
-import { webUtils } from 'electron'
+import { webFrame, webUtils } from 'electron'
 
 let titleBar: Titlebar
 
@@ -41,6 +41,20 @@ async function updateTheme() {
     titleBar.updateBackground(backgroundColor)
   }
 }
+
+async function updateZoomFactor(zoomFactor?: number) {
+  zoomFactor = zoomFactor || (await mainObj.getSettingsStore('zoomFactor'))
+  if (zoomFactor) {
+    webFrame.setZoomFactor(zoomFactor)
+  }
+}
+updateZoomFactor()
+
+mainObj.on('changeSettingsStore', (name: string, val: any) => {
+  if (name === 'zoomFactor') {
+    updateZoomFactor(val)
+  }
+})
 
 mainObj.on('refreshMenu', () => {
   if (titleBar) {

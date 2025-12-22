@@ -47,5 +47,6 @@
   "noPreview": "No preview",
   "commonErr": "Something went wrong",
   "useNativeTitlebar": "Use Native Titlebar",
-  "openAtLogin": "Open at login"
+  "openAtLogin": "Open at login",
+  "zoomLevel": "Zoom Level"
 }

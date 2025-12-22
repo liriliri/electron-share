@@ -27,6 +27,8 @@ import {
 } from '../common/types'
 
 export default {
+  getSettingsStore: invoke<IpcGetStore>('getSettingsStore'),
+  setSettingsStore: invoke<IpcSetStore>('setSettingsStore'),
   getLanguage: invoke<IpcGetLanguage>('getLanguage'),
   getTheme: invoke<IpcGetTheme>('getTheme'),
   getMemStore: invoke<IpcGetStore>('getMemStore'),

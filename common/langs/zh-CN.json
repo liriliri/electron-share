@@ -47,5 +47,6 @@
   "noPreview": "没有预览",
   "commonErr": "出错了",
   "useNativeTitlebar": "使用原生标题栏",
-  "openAtLogin": "开机自动启动"
+  "openAtLogin": "开机自动启动",
+  "zoomLevel": "缩放级别"
 }

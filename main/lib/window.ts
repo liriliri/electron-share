@@ -79,6 +79,10 @@ export function create(opts: IWinOptions) {
     }
     const data = store.get(opts.name) || {}
     if (data.bounds) {
+      if (!opts.resizable) {
+        delete data.bounds.width
+        delete data.bounds.height
+      }
       extend(opts, data.bounds)
     }
     if (data.maximized) {

@@ -1,47 +1,58 @@
 @use '../../renderer/theme' as *;
 @use './mixin' as *;
 @use 'sass:color';
+@use 'sass:list';
+
+$base-theme-vars: (
+  color-text,
+  color-text-secondary,
+  color-error-text,
+  color-success-text,
+  color-warning-text,
+  color-info-text,
+  color-primary,
+  color-primary-hover,
+  color-primary-active,
+  color-bg-container,
+  color-fill,
+  color-fill-secondary,
+  color-fill-tertiary,
+  color-white,
+  color-success,
+  color-error,
+  color-error-bg,
+  color-fill-alter,
+  box-shadow,
+  color-bg-text-hover,
+  color-success-hover,
+  color-success-active,
+  color-primary-bg,
+  color-border
+);
 
 @each $class in (':root', '.-theme-with-dark-background') {
   #{$class} {
     @if ($class == '.-theme-with-dark-background') {
       color-scheme: dark;
     }
-    @include theme-vars(
-      (
-        color-text,
-        color-text-secondary,
-        color-error-text,
-        color-success-text,
-        color-warning-text,
-        color-info-text,
-        color-primary,
-        color-primary-hover,
-        color-primary-active,
-        color-bg-container,
-        color-fill,
-        color-fill-secondary,
-        color-fill-tertiary,
-        color-white,
-        color-success,
-        color-error,
-        color-error-bg,
-        color-fill-alter,
-        box-shadow,
-        color-bg-text-hover,
-        color-success-hover,
-        color-success-active,
-        color-primary-bg,
-        color-border,
-        if(
-          $class == ':root',
+    @if $class == ':root' {
+      @include theme-vars(
+        list.append(
+          $base-theme-vars,
           (
             color-primary-bg: color.adjust($color-primary, $lightness: 25%),
             color-bg-container-darker:
               color.adjust($color-bg-container, $lightness: -5%),
             color-bg-container-lighter:
               color.adjust($color-bg-container, $lightness: 5%),
-          ),
+          )
+        ),
+        'light'
+      );
+    } @else {
+      @include theme-vars(
+        list.append(
+          $base-theme-vars,
           (
             color-primary-bg: color.adjust($color-primary, $lightness: -25%),
             color-bg-container-darker:
@@ -49,10 +60,10 @@
             color-bg-container-lighter:
               color.adjust($color-bg-container-dark, $lightness: 5%),
           )
-        )
-      ),
-      if($class == ':root', 'light', 'dark')
-    );
+        ),
+        'dark'
+      );
+    }
   }
 }
 

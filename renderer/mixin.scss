@@ -4,7 +4,10 @@
 
 $theme-variables: meta.module-variables(theme);
 @mixin theme-var($prop, $value, $theme: 'light') {
-  $suffix: if($theme == 'dark', '-dark', '');
+  $suffix: '';
+  @if $theme == 'dark' {
+    $suffix: '-dark';
+  }
 
   @if $value == '' {
     #{'--' + $prop}: map.get($theme-variables, #{$prop}#{$suffix});

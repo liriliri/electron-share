@@ -7,6 +7,11 @@ import { fileURLToPath } from 'url'
 import log from '../../common/log'
 import endWith from 'licia/endWith'
 import pkg from '../../../../package.json'
+import { exec as _exec } from 'child_process'
+import { promisify } from 'util'
+import { createHash } from 'crypto'
+
+const execAsync = promisify(_exec)
 
 // @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -72,4 +77,12 @@ export function getOpenFileFromArgv(argv: string[], ext: string) {
   }
 
   return ''
+}
+
+export async function exec(command: string) {
+  return (await execAsync(command)).stdout
+}
+
+export function sha1(data: string) {
+  return createHash('sha1').update(data).digest('hex')
 }

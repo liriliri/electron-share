@@ -29,4 +29,5 @@ function transTpl(template: any) {
       item.submenu = transTpl(item.submenu)
     }
   })
+  return template
 }

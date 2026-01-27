@@ -40,6 +40,7 @@ function transTpl(template) {
       item.submenu = transTpl(item.submenu)
     }
   })
+  return template
 }
 
 main.on('clickContextMenu', (id: string) => {

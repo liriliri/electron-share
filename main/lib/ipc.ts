@@ -7,6 +7,7 @@ import log from '../../common/log'
 import {
   IpcGetFileIcon,
   IpcGetOpenFile,
+  IpcGetPath,
   IpcGetStore,
   IpcOpenExternal,
   IpcOpenPath,
@@ -186,4 +187,5 @@ export function init() {
   ))
   handleEvent('getCpuAndMem', processWindow.getCpuAndMem)
   handleEvent('getFileIcon', getFileIcon)
+  handleEvent('getPath', <IpcGetPath>((name) => app.getPath(name)))
 }

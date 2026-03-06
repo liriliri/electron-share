@@ -7,6 +7,7 @@ import {
   IpcGetLanguage,
   IpcGetLogs,
   IpcGetOpenFile,
+  IpcGetPath,
   IpcGetProcessData,
   IpcGetStore,
   IpcGetTheme,
@@ -65,4 +66,5 @@ export default {
   closeWin: invoke('closeWin'),
   toggleWinMaximize: invoke('toggleWinMaximize'),
   hideWin: invoke('hideWin'),
+  getPath: invoke<IpcGetPath>('getPath'),
 }

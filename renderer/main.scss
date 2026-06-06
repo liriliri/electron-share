@@ -67,20 +67,12 @@ $base-theme-vars: (
   }
 }
 
-@font-face {
-  font-family: 'MiSans';
-  src: url('./assets/MiSans-Regular.ttf');
-}
-
 * {
   box-sizing: border-box;
 }
 
 .platform-windows {
   --luna-font-family: system-ui, 'Segoe UI', 'Microsoft YaHei UI', sans-serif !important;
-  @media (min-resolution: 1.5dppx) {
-    --luna-font-family: 'MiSans', system-ui, sans-serif !important;
-  }
   button,
   select,
   input,

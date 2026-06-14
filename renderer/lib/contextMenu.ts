@@ -19,7 +19,6 @@ export default function contextMenu(
 const build = LunaMenu.build
 LunaMenu.build = function (template) {
   const menu = build([])
-  callbacks = {}
   transTpl(template)
   menu.show = function (x, y) {
     main.showContextMenu(x, y, template)
@@ -46,5 +45,6 @@ function transTpl(template) {
 main.on('clickContextMenu', (id: string) => {
   if (callbacks[id]) {
     callbacks[id]()
+    callbacks = {}
   }
 })

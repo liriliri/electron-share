@@ -1,4 +1,5 @@
-import { BrowserWindow, app, webContents } from 'electron'
+import { BrowserWindow, app, webContents, WebContents } from 'electron'
+import type { ProcessMetric } from 'electron'
 import * as window from '../../main/lib/window'
 import once from 'licia/once'
 import { handleEvent } from '../lib/util'
@@ -85,6 +86,38 @@ export function addProcess(callback: () => Promise<IProcess | void>) {
 
 const cpuNum = os.cpus().length
 
+// Electron contextIsolation preload world (see webContents.executeJavaScriptInIsolatedWorld)
+const PRELOAD_WORLD_ID = 999
+
+async function getMemoryFootprint(
+  metric: ProcessMetric,
+  wc?: WebContents
+): Promise<number> {
+  const fallback = metric.memory.workingSetSize
+
+  if (metric.pid === process.pid) {
+    try {
+      const info = await process.getProcessMemoryInfo()
+      return info.private
+    } catch {
+      return fallback
+    }
+  }
+
+  if (wc && !wc.isDestroyed()) {
+    try {
+      const info = await wc.executeJavaScriptInIsolatedWorld(PRELOAD_WORLD_ID, [
+        { code: 'process.getProcessMemoryInfo()' },
+      ])
+      return info.private
+    } catch {
+      return fallback
+    }
+  }
+
+  return fallback
+}
+
 const getProcessData: IpcGetProcessData = singleton(async () => {
   const allWebContents = Object.fromEntries(
     map(webContents.getAllWebContents(), (webContent) => [
@@ -93,26 +126,28 @@ const getProcessData: IpcGetProcessData = singleton(async () => {
     ])
   )
 
-  const processData = map(app.getAppMetrics(), (metric) => {
-    const ret: IProcess = {
-      name: metric.name || metric.serviceName || '',
-      pid: metric.pid,
-      cpu: metric.cpu.percentCPUUsage * cpuNum,
-      memory: metric.memory.workingSetSize,
-      type: metric.type,
-    }
+  const processData = await Promise.all(
+    map(app.getAppMetrics(), async (metric) => {
+      const webContent = allWebContents[metric.pid]
+      const ret: IProcess = {
+        name: metric.name || metric.serviceName || '',
+        pid: metric.pid,
+        cpu: metric.cpu.percentCPUUsage * cpuNum,
+        memory: await getMemoryFootprint(metric, webContent),
+        type: metric.type,
+      }
 
-    const webContent = allWebContents[metric.pid]
-    if (webContent) {
-      ret.name = webContent.getTitle() || ret.name
-      ret.webContentsId = webContent.id
-    }
-    if (metric.pid === process.pid) {
-      ret.name = t('mainProcess')
-    }
+      if (webContent) {
+        ret.name = webContent.getTitle() || ret.name
+        ret.webContentsId = webContent.id
+      }
+      if (metric.pid === process.pid) {
+        ret.name = t('mainProcess')
+      }
 
-    return ret
-  })
+      return ret
+    })
+  )
 
   for (let i = 0, len = processCallbacks.length; i < len; i++) {
     const callback = processCallbacks[i]

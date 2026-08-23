@@ -13,10 +13,6 @@ if (!app.requestSingleInstanceLock()) {
   process.exit(0)
 }
 
-if (!isMac) {
-  app.disableHardwareAcceleration()
-}
-
 app.setName(pkg.productName)
 
 app.on('ready', () => {

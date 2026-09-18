@@ -5,7 +5,6 @@ import {
 } from 'electron'
 import types from 'licia/types'
 import defaults from 'licia/defaults'
-import remove from 'licia/remove'
 import each from 'licia/each'
 import path from 'path'
 import { attachTitlebarToWindow } from 'custom-electron-titlebar/main'
@@ -44,7 +43,6 @@ interface IWinOptions {
   resizable?: boolean
 }
 
-const visibleWins: BrowserWindow[] = []
 const wins: types.PlainObj<BrowserWindow> = {}
 let focusedWin: BrowserWindow | null = null
 
@@ -185,16 +183,13 @@ export function create(opts: IWinOptions) {
   setTimeout(() => readyAndShow(), 1000)
 
   win.on('show', () => {
-    visibleWins.push(win)
     win.webContents.send('showWin')
   })
   win.on('focus', () => {
     focusedWin = win
     win.webContents.send('focusWin')
   })
-  win.on('hide', () => remove(visibleWins, (window) => window === win))
   win.on('closed', () => {
-    remove(visibleWins, (window) => window === win)
     delete wins[opts.name]
   })
   wins[opts.name] = win
@@ -249,7 +244,9 @@ export function getWin(name: string) {
 }
 
 export function getVisibleWins() {
-  return visibleWins
+  return BrowserWindow.getAllWindows().filter(
+    (win) => !win.isDestroyed() && win.isVisible()
+  )
 }
 
 export function getFocusedWin() {
